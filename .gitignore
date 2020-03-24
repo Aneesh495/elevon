@@ -1,0 +1,24 @@
+# Build artifacts
+build/
+bin/
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+
+# Flight simulation and runtime logs
+*.fdr
+*.journal
+*.sock
+*.pcap
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# OS specific files
+.DS_Store
+Thumbs.db

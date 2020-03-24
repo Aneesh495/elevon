@@ -1,0 +1,15 @@
+[package]
+  cjc-version = "0.55.3"
+  name = "elevon"
+  description = "Triple-Modular Redundant Fly-by-Wire Flight Control Computer, ARINC 664 Avionics Network, and Envelope Protection"
+  version = "1.0.0"
+  compile-option = ""
+  link-option = ""
+  output-type = "static"
+  src-dir = "src/cangjie"
+  target-dir = "build"
+
+[workspace]
+  members = []
+
+[dependencies]
