@@ -1,0 +1,79 @@
+{
+  "network_name": "ELEVON-AVIONICS-AFDX-01",
+  "bandwidth_mbps": 100,
+  "redundancy_mode": "DUAL_NETWORK_A_B",
+  "virtual_links": [
+    {
+      "vl_id": 101,
+      "name": "FCC_LANE_A_TO_ACTUATORS",
+      "bag_ms": 10,
+      "l_max_bytes": 256,
+      "max_jitter_us": 400,
+      "source_end_system": "FCC_LANE_A",
+      "destination_multicast_ip": "10.0.0.101"
+    },
+    {
+      "vl_id": 102,
+      "name": "FCC_LANE_B_TO_ACTUATORS",
+      "bag_ms": 10,
+      "l_max_bytes": 256,
+      "max_jitter_us": 400,
+      "source_end_system": "FCC_LANE_B",
+      "destination_multicast_ip": "10.0.0.102"
+    },
+    {
+      "vl_id": 103,
+      "name": "FCC_LANE_C_TO_ACTUATORS",
+      "bag_ms": 10,
+      "l_max_bytes": 256,
+      "max_jitter_us": 400,
+      "source_end_system": "FCC_LANE_C",
+      "destination_multicast_ip": "10.0.0.103"
+    },
+    {
+      "vl_id": 201,
+      "name": "ADIRS_1_TO_FCCS",
+      "bag_ms": 20,
+      "l_max_bytes": 512,
+      "max_jitter_us": 500,
+      "source_end_system": "ADIRS_UNIT_1",
+      "destination_multicast_ip": "10.0.0.201"
+    },
+    {
+      "vl_id": 202,
+      "name": "ADIRS_2_TO_FCCS",
+      "bag_ms": 20,
+      "l_max_bytes": 512,
+      "max_jitter_us": 500,
+      "source_end_system": "ADIRS_UNIT_2",
+      "destination_multicast_ip": "10.0.0.202"
+    },
+    {
+      "vl_id": 203,
+      "name": "ADIRS_3_TO_FCCS",
+      "bag_ms": 20,
+      "l_max_bytes": 512,
+      "max_jitter_us": 500,
+      "source_end_system": "ADIRS_UNIT_3",
+      "destination_multicast_ip": "10.0.0.203"
+    },
+    {
+      "vl_id": 301,
+      "name": "FCC_TO_BLACK_BOX_FDR",
+      "bag_ms": 10,
+      "l_max_bytes": 1024,
+      "max_jitter_us": 800,
+      "source_end_system": "FCC_VOTER_OUTPUT",
+      "destination_multicast_ip": "10.0.0.301"
+    },
+    {
+      "vl_id": 401,
+      "name": "FCC_TO_GLASS_COCKPIT_PFD",
+      "bag_ms": 50,
+      "l_max_bytes": 1024,
+      "max_jitter_us": 1000,
+      "source_end_system": "FCC_VOTER_OUTPUT",
+      "destination_multicast_ip": "10.0.0.401"
+    }
+  ]
+}

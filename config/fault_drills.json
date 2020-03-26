@@ -1,0 +1,91 @@
+{
+  "scenarios": [
+    {
+      "drill_id": 1,
+      "name": "DRILL_ASYMMETRIC_PITOT_FREEZE",
+      "description": "Simulates ice accretion causing stagnation pressure loss in Pitot Probe 1 while probes 2 and 3 remain clear.",
+      "target_subsystem": "ADIRS",
+      "fault_parameters": {
+        "probe_index": 1,
+        "pressure_drop_pct_per_sec": 12.0,
+        "residual_threshold_hpa": 25.0
+      },
+      "expected_outcome": "Probe 1 isolated by FDI within 200 ms; triplex MVS seamlessly falls back to duplex cross-check; normal law retained."
+    },
+    {
+      "drill_id": 2,
+      "name": "DRILL_CCDL_INTER_LANE_DESYNC",
+      "description": "Injects a 25 ms transmission delay on Cross-Channel Data Link between Lane B and Lane C.",
+      "target_subsystem": "TMR_CORE",
+      "fault_parameters": {
+        "lane_affected": "LANE_B",
+        "skew_duration_ms": 25.0
+      },
+      "expected_outcome": "Lane B flagged as desynchronized; voter proceeds with healthy Lanes A and C."
+    },
+    {
+      "drill_id": 3,
+      "name": "DRILL_STUCK_INBOARD_ELEVATOR",
+      "description": "Simulates mechanical seizure of the left inboard elevator actuator at 4 degrees trailing edge down.",
+      "target_subsystem": "ACTUATOR",
+      "fault_parameters": {
+        "surface": "LEFT_INBOARD_ELEVATOR",
+        "seizure_angle_deg": 4.0
+      },
+      "expected_outcome": "OFD and rate deviation trip after 60 ms; control allocation transfers pitch authority to outboard elevators and auto-trims THS."
+    },
+    {
+      "drill_id": 4,
+      "name": "DRILL_HIGH_SPEED_DIVE_EXCEEDANCE",
+      "description": "Aircraft forced into steep dive approaching VMO + 15 knots to trigger high-speed envelope protection.",
+      "target_subsystem": "FCL_ENVELOPE",
+      "fault_parameters": {
+        "initial_dive_angle_deg": -22.0,
+        "thrust_pct": 100.0
+      },
+      "expected_outcome": "High-speed protection commands positive pitch-up override, freezes nose-down trim, and limits dive velocity to VMO boundary."
+    },
+    {
+      "drill_id": 5,
+      "name": "DRILL_EXTREME_WAKE_VORTEX",
+      "description": "Subject aircraft encounters severe wake vortex turbulence demanding sudden 3.4g load factor and 45 deg/sec roll rate.",
+      "target_subsystem": "FCL_ENVELOPE",
+      "fault_parameters": {
+        "gust_vertical_fps": 66.0,
+        "gust_lateral_fps": 38.0
+      },
+      "expected_outcome": "Structural g-limiter clamps normal acceleration to +2.5g and roll rate limiter preserves wing root structural margin."
+    },
+    {
+      "drill_id": 6,
+      "name": "DRILL_AFDX_NETWORK_A_SEVERANCE",
+      "description": "Simulates complete loss of AFDX Network A physical switch plane.",
+      "target_subsystem": "AFDX",
+      "fault_parameters": {
+        "network_plane": "NETWORK_A",
+        "drop_ratio": 1.0
+      },
+      "expected_outcome": "Redundancy management accepts 100% of packets via Network B; zero frame loss and zero command dropout observed at actuators."
+    },
+    {
+      "drill_id": 7,
+      "name": "DRILL_DUAL_HYDRAULIC_LOSS",
+      "description": "Simulates failure of Green and Yellow hydraulic circuits, leaving Blue circuit operational.",
+      "target_subsystem": "ACTUATOR",
+      "fault_parameters": {
+        "failed_circuits": ["GREEN", "YELLOW"]
+      },
+      "expected_outcome": "Flight control law degrades gracefully to Alternate Law with roll control via remaining aileron pair and pitch via THS."
+    },
+    {
+      "drill_id": 8,
+      "name": "DRILL_RUNAWAY_STABILIZER_OVERRIDE",
+      "description": "Simulates uncommanded Trimmable Horizontal Stabilizer (THS) pitch-trim screwjack motion.",
+      "target_subsystem": "FCL_ENVELOPE",
+      "fault_parameters": {
+        "runaway_rate_deg_per_sec": 1.2
+      },
+      "expected_outcome": "Stick input in opposite direction immediately cuts electrical clutch to THS motor; pilot maintains pitch authority via elevators."
+    }
+  ]
+}
