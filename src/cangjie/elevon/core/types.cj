@@ -301,3 +301,91 @@ public struct Quaternion {
         )
     }
 }
+
+/*
+ * Pilot inceptor demands (sidestick, rudder pedals, speedbrake lever).
+ */
+public struct Inceptor {
+    public var pitch_stick_norm: Float64
+    public var roll_stick_norm: Float64
+    public var rudder_pedal_norm: Float64
+    public var speedbrake_lever: Float64
+    public var ap_disconnect: Bool
+    public var take_over_priority: Bool
+
+    public init(
+        pitch_stick_norm: Float64,
+        roll_stick_norm: Float64,
+        rudder_pedal_norm: Float64,
+        speedbrake_lever: Float64,
+        ap_disconnect: Bool,
+        take_over_priority: Bool
+    ) {
+        this.pitch_stick_norm = pitch_stick_norm
+        this.roll_stick_norm = roll_stick_norm
+        this.rudder_pedal_norm = rudder_pedal_norm
+        this.speedbrake_lever = speedbrake_lever
+        this.ap_disconnect = ap_disconnect
+        this.take_over_priority = take_over_priority
+    }
+
+    public static func neutral(): Inceptor {
+        return Inceptor(0.0, 0.0, 0.0, 0.0, false, false)
+    }
+}
+
+/*
+ * Primary and secondary control surface deflections (degrees).
+ */
+public struct SurfaceDeflections {
+    public var elevInboardLeftDeg: Float64
+    public var elevInboardRightDeg: Float64
+    public var elevOutboardLeftDeg: Float64
+    public var elevOutboardRightDeg: Float64
+    public var aileronLeftDeg: Float64
+    public var aileronRightDeg: Float64
+    public var rudderUpperDeg: Float64
+    public var rudderLowerDeg: Float64
+    public var thsDeg: Float64
+    public var spoilersLeftDeg: Array<Float64>
+    public var spoilersRightDeg: Array<Float64>
+
+    public init() {
+        this.elevInboardLeftDeg = 0.0
+        this.elevInboardRightDeg = 0.0
+        this.elevOutboardLeftDeg = 0.0
+        this.elevOutboardRightDeg = 0.0
+        this.aileronLeftDeg = 0.0
+        this.aileronRightDeg = 0.0
+        this.rudderUpperDeg = 0.0
+        this.rudderLowerDeg = 0.0
+        this.thsDeg = 0.0
+        this.spoilersLeftDeg = [0.0, 0.0, 0.0, 0.0, 0.0]
+        this.spoilersRightDeg = [0.0, 0.0, 0.0, 0.0, 0.0]
+    }
+}
+
+/*
+ * Hydraulic circuit pressure distribution status.
+ */
+public struct HydraulicStatus {
+    public var greenPressPsi: Float64
+    public var bluePressPsi: Float64
+    public var yellowPressPsi: Float64
+    public var greenAvail: Bool
+    public var blueAvail: Bool
+    public var yellowAvail: Bool
+
+    public init(g: Float64, b: Float64, y: Float64) {
+        this.greenPressPsi = g
+        this.bluePressPsi = b
+        this.yellowPressPsi = y
+        this.greenAvail = (g >= 2200.0)
+        this.blueAvail = (b >= 2200.0)
+        this.yellowAvail = (y >= 2200.0)
+    }
+
+    public static func nominal(): HydraulicStatus {
+        return HydraulicStatus(3000.0, 3000.0, 3000.0)
+    }
+}
