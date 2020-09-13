@@ -133,6 +133,12 @@ typedef struct {
     bool yellow_avail;
 } elevon_hydraulic_status_t;
 
+/* Utility conversion and helper declarations */
+const char *elevon_status_str(elevon_status_t status);
+const char *elevon_law_mode_str(elevon_law_mode_t mode);
+void elevon_surfaces_zero(elevon_surfaces_t *surf);
+void elevon_inceptor_zero(elevon_inceptor_t *inc);
+
 #ifdef __cplusplus
 }
 #endif
