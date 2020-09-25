@@ -125,7 +125,8 @@ elevon_status_t elevon_fcc_step(
     double c_star_dem = (pitch_stick >= 0.0) ? (pitch_stick * 1.5) : (pitch_stick * 2.0);
     double v_co_mps = 210.0 * 0.51444444;
     double c_star_fb = (fcc->imu_data.load_factor_nz - 1.0) + ((v_co_mps / ELEVON_GRAVITY_G0) * gyro_rad_s.y);
-    double c_star_err = c_star_dem - c_star_fb;
+    // Nose-down is positive, nose-up is negative
+    double c_star_err = c_star_fb - c_star_dem;
 
     fcc->c_star_integrator += 3.2 * c_star_err * dt_sec;
     if (fcc->c_star_integrator > 30.0) fcc->c_star_integrator = 30.0;
