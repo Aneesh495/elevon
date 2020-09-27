@@ -18,6 +18,7 @@ typedef struct {
     uint32_t l_max_bytes;
     uint32_t max_jitter_us;
     uint64_t last_tx_us;
+    bool has_transmitted;
     uint8_t seq_num;
     uint64_t tx_count;
     uint64_t bag_violations;

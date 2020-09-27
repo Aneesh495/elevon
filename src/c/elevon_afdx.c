@@ -15,23 +15,25 @@ void elevon_afdx_vl_init(
     vl->l_max_bytes = l_max_bytes;
     vl->max_jitter_us = max_jitter_us;
     vl->last_tx_us = 0;
+    vl->has_transmitted = false;
     vl->seq_num = 0;
     vl->tx_count = 0;
     vl->bag_violations = 0;
 }
 
 bool elevon_afdx_vl_can_tx(const elevon_afdx_vl_t *vl, uint64_t now_us) {
-    if (!vl || vl->last_tx_us == 0) return true;
+    if (!vl || !vl->has_transmitted) return true;
     uint64_t bag_us = (uint64_t)vl->bag_ms * 1000ULL;
     return (now_us - vl->last_tx_us) >= bag_us;
 }
 
 uint8_t elevon_afdx_vl_record_tx(elevon_afdx_vl_t *vl, uint64_t now_us) {
     if (!vl) return 0;
-    if (!elevon_afdx_vl_can_tx(vl, now_us)) {
+    if (vl->has_transmitted && !elevon_afdx_vl_can_tx(vl, now_us)) {
         vl->bag_violations++;
     }
     vl->last_tx_us = now_us;
+    vl->has_transmitted = true;
     vl->tx_count++;
     uint8_t seq = vl->seq_num;
     vl->seq_num = (vl->seq_num == 255) ? 0 : (vl->seq_num + 1);
