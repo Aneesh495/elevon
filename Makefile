@@ -22,6 +22,9 @@ TARGET_CLI = $(BIN_DIR)/elevon
 TEST_SRCS = $(wildcard tests/test_*.c)
 TEST_BINS = $(patsubst tests/%.c, $(BIN_DIR)/%, $(TEST_SRCS))
 
+BENCH_SRCS = $(wildcard benchmarks/*.c)
+BENCH_BINS = $(patsubst benchmarks/%.c, $(BIN_DIR)/%, $(BENCH_SRCS))
+
 .PHONY: all clean test check-em-dash dirs bench
 
 all: dirs $(TARGET_LIB) $(TARGET_CLI)
@@ -64,6 +67,15 @@ test: dirs $(TARGET_LIB) $(TEST_BINS)
 
 $(BIN_DIR)/test_%: tests/test_%.c $(TARGET_LIB) | dirs
 	$(CC) $(CFLAGS) $< $(TARGET_LIB) -o $@ -lpthread -lm
+
+$(BIN_DIR)/bench_%: benchmarks/bench_%.c $(TARGET_LIB) | dirs
+	$(CC) $(CFLAGS) $< $(TARGET_LIB) -o $@ -lpthread -lm
+
+bench: dirs $(TARGET_LIB) $(BENCH_BINS)
+	@for b in $(BENCH_BINS); do \
+		echo "Running $$b..."; \
+		$$b || exit 1; \
+	done
 
 check-em-dash:
 	@python3 tools/lint_no_em_dash.py
