@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include "elevon.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -96,7 +98,8 @@ static int cmd_sim(int argc, char **argv) {
             printf("================================================================================\n");
 
             if (!fast) {
-                usleep(50000); // 50 ms pause for readable terminal viewing
+                const struct timespec pause = { .tv_nsec = 50000000L };
+                nanosleep(&pause, NULL);
             }
         }
     }
