@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include "elevon_fdr.h"
 #include "elevon_crc32.h"
 #include <stdio.h>
